@@ -11,7 +11,7 @@ const uri = "mongodb+srv://db_user_apiChat:6774tvEe4TF2nZIV@cluster0.hkokt.mongo
 //mongoose tiene promesas por lo que se usa global.Promise
 db.Promise = global.Promise;
 
-async function connect  (){
+async function connect (){
 
 //usamos el metodo connect para conectarnos a la base de datos, pasando la url y el useNewUrlParser para que no 
 //nos muestre los warnings, esto en true
