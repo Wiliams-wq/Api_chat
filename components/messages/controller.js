@@ -35,7 +35,24 @@ const getMessage = () => {
         resolve(store.list())
     })
 }
+
+//funcion para actualizar mensaje, recibe el id del mensaje y el mensaje
+const updateMessage = (id, message) => {
+    //uso de promesa,  de manera sicrona
+    return new Promise( async (resolve, reject) => {
+        //si id o mensaje no tiene nada rechaza la promesa mandando error en conosola
+        if(!id || !message) {
+            reject('Los datos son incorrectos');
+            //retornamos falso para que se detenga la ejecucion
+            return false;
+        }
+        //si sale bien, guardamos en result el nuevo resultado de la funcion updateMessage
+        const result = await store.updateText(id, message)
+        resolve(result);
+    });
+}
 module.exports = {
     addMessage,
-    getMessage
+    getMessage,
+    updateMessage
 }

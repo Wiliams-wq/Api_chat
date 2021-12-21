@@ -12,12 +12,14 @@ const controller = require('./controller');
 const response = require('../../network/response');
 
 router.get('/', (req, res) => {
+    //retornamos la promesa resuelta de controller.getMessage y en response pasamos 
+    //la lista de mensajes que fue retornada
     controller.getMessage()
-    .then((messageList) =>{
-        response.success(req,res, messageList, 200)
-    }).catch(e =>{
-        response.error(req, res, "Unexpected Error", 500, e)
-    })
+        .then((messageList) => {
+            response.success(req, res, messageList, 200)
+        }).catch(e => {
+            response.error(req, res, "Unexpected Error", 500, e)
+        })
 });
 
 router.post('/', (req, res) => {
@@ -35,6 +37,24 @@ router.post('/', (req, res) => {
         );
 
 });
+
+//funcion para modificar n mensaje, recibe el id del mensaje, para esto se usan parametros
+//de la ruta /:id
+router.patch('/:id', (req, res) => {
+    console.log(req.params.id);
+    res.send("OK");
+    
+
+    //al metodo updateText de controller, le pasamos el id del mensaje y el mensaje nuevo
+    controller.updateMessage(req.params.id, req.body.message)
+    //como devuelve una promesa con datos, lo obtenemos y lo pasamos a response
+        .then((data) => {
+            response.success(req, res, data, 200);
+        }).catch(e => {
+            //todo sale mal, mostraos error
+            response.error(req, res, "Error al actualizar", 500, e);
+        });
+})
 
 //exportamos la ruta para ser utilizada 
 module.exports = router;

@@ -31,8 +31,23 @@ console.log("conectado")
     return messages
  };
 
+ //funcion para actualizar el mensaje, recibe el id del mensaje y el mensaje
+ async function updateMessage(id, message){
+    // buscara un mensaje que sea igual al id enviado con el de la base de datos
+    //y lo guarda en foundMessage
+     const foundMessage = await Model.findOne({_id: id});
+
+     //al tener ya el mensaje, cambia los valores con los del nuevo mensaje
+     foundMessage.message = message;
+     //guardamos el mensaje nuevo con save
+     //y retornamos el mensaje nuevo
+        const newMessage = await foundMessage.save();
+        return newMessage;
+    }
+
  module.exports = {
      //el metodo addMessage lo usa el controller pero con el nombre add al igual que list
      add: addMessage,
      list: getMessage,
+     updateText: updateMessage
  }
