@@ -12,7 +12,12 @@ const controller = require('./controller');
 const response = require('../../network/response');
 
 router.get('/', (req, res) => {
-    response.success(req, res, 'Hello world', 201);
+    controller.getMessage()
+    .then((messageList) =>{
+        response.success(req,res, messageList, 200)
+    }).catch(e =>{
+        response.error(req, res, "Unexpected Error", 500, e)
+    })
 });
 
 router.post('/', (req, res) => {
