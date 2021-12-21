@@ -29,10 +29,14 @@ const addMessage = (user, message) => {
     });
 }
 
-//funcion para obtener mensaje, con una promesa, y se resuelve llamando a store y la funcion list() que es getMessage
-const getMessage = () => {
+//funcion para obtener mensaje, con una promesa, y se resuelve llamando a store y 
+//la funcion list() que es getMessage
+
+//obtenemos como parametro el filterUser para pasarselo a la funcion getMessage de store
+//esta se encuentra como list
+const getMessage = (filterUser) => {
     return new Promise((resolve, reject) =>{
-        resolve(store.list())
+        resolve(store.list(filterUser))
     })
 }
 

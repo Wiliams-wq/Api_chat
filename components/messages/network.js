@@ -12,9 +12,13 @@ const controller = require('./controller');
 const response = require('../../network/response');
 
 router.get('/', (req, res) => {
+    //rcreamos un query que servira como filtro, o devuelve null
+    const filterMessages = req.query.user || null;
     //retornamos la promesa resuelta de controller.getMessage y en response pasamos 
     //la lista de mensajes que fue retornada
-    controller.getMessage()
+
+    //enviamos el filetro a getMessage
+    controller.getMessage(filterMessages)
         .then((messageList) => {
             response.success(req, res, messageList, 200)
         }).catch(e => {
