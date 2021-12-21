@@ -58,7 +58,20 @@ router.patch('/:id', (req, res) => {
             //todo sale mal, mostraos error
             response.error(req, res, "Error al actualizar", 500, e);
         });
-})
+});
+
+//metodo para eliminar con id
+router.delete('/:id', (req, res) => {
+    //al metodo deleteMessage de controller, le pasamos el id del mensaje
+    controller.deleteMessage(req.params.id)
+        .then(() => {
+            //mostramos mensaje de exito
+            response.success(req, res, `Usuario ${req.params.id} eliminado`, 200);
+        }).catch(e => {
+            //todo sale mal, mostramos error
+            response.error(req, res, "Error al eliminar", 500, e);
+        });
+});
 
 //exportamos la ruta para ser utilizada 
 module.exports = router;

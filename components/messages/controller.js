@@ -4,26 +4,26 @@
 const store = require("./store")
 //con esta funcion obtenemos el mensaje para crear el fullMessage con el usuario, message y fecha
 const addMessage = (user, message) => {
-//recibimos de network.js el usuario y el mensaje  y usamos una promesa
+    //recibimos de network.js el usuario y el mensaje  y usamos una promesa
     return new Promise((resolve, reject) => {
 
-//si usuario o mensaje estan vacios entonces que muestre un error en consola y ejecutamos
-//el callaback reject
-        if(!user || !message) {
+        //si usuario o mensaje estan vacios entonces que muestre un error en consola y ejecutamos
+        //el callaback reject
+        if (!user || !message) {
             console.error('[messageController], no hay usaurio o mensaje');
             return reject('Los datos son incorrectos');
         }
 
-//el arreglo de mensajes tiene los datos enviados por network.js ademas de que agregamos
-//la fecha de creacion del mensaje
+        //el arreglo de mensajes tiene los datos enviados por network.js ademas de que agregamos
+        //la fecha de creacion del mensaje
         const fullMessage = {
             user: user,
             message: message,
             date: new Date()
         }
-//agregamos a sotre el fullMessage
+        //agregamos a sotre el fullMessage
         store.add(fullMessage)
-//resolvemos con fullMessage
+        //resolvemos con fullMessage
         resolve(fullMessage);
 
     });
@@ -35,7 +35,7 @@ const addMessage = (user, message) => {
 //obtenemos como parametro el filterUser para pasarselo a la funcion getMessage de store
 //esta se encuentra como list
 const getMessage = (filterUser) => {
-    return new Promise((resolve, reject) =>{
+    return new Promise((resolve, reject) => {
         resolve(store.list(filterUser))
     })
 }
@@ -43,9 +43,9 @@ const getMessage = (filterUser) => {
 //funcion para actualizar mensaje, recibe el id del mensaje y el mensaje
 const updateMessage = (id, message) => {
     //uso de promesa,  de manera sicrona
-    return new Promise( async (resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         //si id o mensaje no tiene nada rechaza la promesa mandando error en conosola
-        if(!id || !message) {
+        if (!id || !message) {
             reject('Los datos son incorrectos');
             //retornamos falso para que se detenga la ejecucion
             return false;
@@ -54,9 +54,32 @@ const updateMessage = (id, message) => {
         const result = await store.updateText(id, message)
         resolve(result);
     });
-}
+};
+
+//borramos el mensaje, recibe el id del mensaje
+const deleteMessage = (id) => {
+    //con la promesa, de manera sincrona
+    return new Promise(async (resolve, reject) => {
+//compramos si el id esta vacio, lanzamos el reject
+        if (!id) {
+            reject('Id invalido');
+            return false;
+        }
+        //si sale bien, usamos remove y mandamos el id a la store
+        store.remove(id)
+        //con la promesa resolvemos si no, la rechazamos
+            .then(() => {
+                resolve();
+            })
+            .catch(e => {
+                reject(e);
+            })
+    })
+};
+
 module.exports = {
     addMessage,
     getMessage,
-    updateMessage
+    updateMessage,
+    deleteMessage
 }

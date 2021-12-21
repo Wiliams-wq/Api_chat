@@ -55,11 +55,18 @@ async function getMessage(filterUser) {
         //y retornamos el mensaje nuevo
         const newMessage = await foundMessage.save();
         return newMessage;
-    }
+    };
+
+    //funcion para borrar el mensaje, recibe el id del mensaje
+    function removeMessage(id) {
+        //eliminamos el mensaje con el id que recibimos
+       return Model.deleteOne({ _id: id });
+    };
 
     module.exports = {
         //el metodo addMessage lo usa el controller pero con el nombre add al igual que list
         add: addMessage,
         list: getMessage,
-        updateText: updateMessage
+        updateText: updateMessage,
+        remove: removeMessage
     }
