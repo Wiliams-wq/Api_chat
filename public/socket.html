@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <!--en este archivo se muestra el uso de websockets-->
+    <h1>Mira la consola</h1>
+</body>
+
+
+<script>
+    //creamos una instancia de socket y a connect le pasamos el localhost y el puerto
+    var socket = io.connect('http://localhost:3000',{
+        'forceNew':true
+    });
+    //escuchamos el evento 'mensaje' y devolvemos la data en console.log
+    socket.on("message",function(data){
+        console.log(data);
+    });
+
+</script>
+</html>

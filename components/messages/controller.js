@@ -2,6 +2,9 @@
 
 //requerimos el store para poder usarlo
 const store = require("./store")
+//usamos socktes especificamente el objeto socket para poder emitir el evento
+const sockets = require("../../socket").socket;
+
 //con esta funcion obtenemos el mensaje para crear el fullMessage con el usuario, message y fecha
 
 //se recibe file
@@ -35,7 +38,10 @@ const addMessage = (chat,user, message, file) => {
             file: fileUrl
         }
         //agregamos a sotre el fullMessage
-        store.add(fullMessage)
+        store.add(fullMessage);
+        
+        //emitimos el evento a sockets.io nombrando el nombre del evento y mandamos el fullMessage
+        sockets.io.emit('message', fullMessage);
         //resolvemos con fullMessage
         resolve(fullMessage);
 
