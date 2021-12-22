@@ -7,6 +7,8 @@ const server = require('http').Server(app);
 //usamos sockets
 const  socket = require("./socket")
 
+const config = require("./config");
+
 //con cors habilitamos todas las cabeceras, para que se puedan usar desde cualquier lugar
 //es recomendado asi luego poco a poco se va restringiendo
 const cors = require('cors');
@@ -32,7 +34,8 @@ app.use(cors());
 socket.connect(server)
 routes(app)
 
-server.listen(3000, () => {
-    console.log("Servidor corriendo en el puerto localhost:3000");
+server.listen(config.port, () => {
+    //uso de config
+    console.log(`La aplicacion esta escuchando en ${config.host}:${config.port}`);
 }
 );

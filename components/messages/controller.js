@@ -5,8 +5,8 @@ const store = require("./store")
 //usamos socktes especificamente el objeto socket para poder emitir el evento
 const sockets = require("../../socket").socket;
 
+const config = require("../../config");
 //con esta funcion obtenemos el mensaje para crear el fullMessage con el usuario, message y fecha
-
 //se recibe file
 const addMessage = (chat,user, message, file) => {
     //recibimos de network.js el usuario y el mensaje  y usamos una promesa
@@ -24,7 +24,8 @@ const addMessage = (chat,user, message, file) => {
         //si file tiene algo entonces componemos la url, app/files es donde se guardan los 
         //estaticos en el servidor y concatenamos el nombre del archivo file.filename
         if(file){
-            fileUrl = "http://localhost:3000/app/files/" + file.filename;
+            //uso de config
+            fileUrl = `${config.host}:${config.port}/app/files/` + file.filename;
         }
 
         //el arreglo de mensajes tiene los datos enviados por network.js ademas de que agregamos
