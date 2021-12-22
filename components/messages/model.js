@@ -26,6 +26,8 @@ const mySchema = new Schema({
     },
     message: String,
     date: Date,
+    //agregamos una propiedad para almacenar la imagen
+    file: String
 });
 
 //creamos un model, este es el modelo y tiene es esquema por lo que todo lo que se cree

@@ -17,7 +17,7 @@ const response = require('../../network/response');
 //se le dice a multer el destino de los archivos, en este caso la carpeta uploads 
 //esto en el disco local
 const upload = multer({
-    dest: 'uploads/'
+    dest: 'public/files/'
 })
 
 router.get('/', (req, res) => {
@@ -37,8 +37,10 @@ router.get('/', (req, res) => {
 //pasamos upload com o middleware(punto donde va a pasar algo antes de entrar a la funcion)
 //le decimos que solo tiene un archivo de nombre file
 router.post('/', upload.single('file'), (req, res) => {
-    //enviamos mensaje y usuario al controlador tambien el chat
-    controller.addMessage(req.body.chat, req.body.user, req.body.message)
+
+
+    //enviamos mensaje y usuario al controlador tambien el chat enviamos file
+    controller.addMessage(req.body.chat, req.body.user, req.body.message, req.file)
         //con la promesa, obtenemos fullMessage y responsemos a response, enviando el mensaje
         //y el estado de la peticion
         .then((fullMessage) => {

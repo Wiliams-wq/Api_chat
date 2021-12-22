@@ -3,7 +3,9 @@
 //requerimos el store para poder usarlo
 const store = require("./store")
 //con esta funcion obtenemos el mensaje para crear el fullMessage con el usuario, message y fecha
-const addMessage = (chat,user, message) => {
+
+//se recibe file
+const addMessage = (chat,user, message, file) => {
     //recibimos de network.js el usuario y el mensaje  y usamos una promesa
     return new Promise((resolve, reject) => {
 
@@ -13,6 +15,14 @@ const addMessage = (chat,user, message) => {
             console.error('[messageController], no hay usaurio o mensaje');
             return reject('Los datos son incorrectos');
         }
+//variable que alamacena el file en texto
+        let fileUrl = '';
+
+        //si file tiene algo entonces componemos la url, app/files es donde se guardan los 
+        //estaticos en el servidor y concatenamos el nombre del archivo file.filename
+        if(file){
+            fileUrl = "http://localhost:3000/app/files/" + file.filename;
+        }
 
         //el arreglo de mensajes tiene los datos enviados por network.js ademas de que agregamos
         //la fecha de creacion del mensaje. utilizamos el chat para que se sepa quien creo el mensaje
@@ -20,7 +30,9 @@ const addMessage = (chat,user, message) => {
             chat: chat,
             user: user,
             message: message,
-            date: new Date()
+            date: new Date(),
+            //agregamos a mensaje el archivo
+            file: fileUrl
         }
         //agregamos a sotre el fullMessage
         store.add(fullMessage)
