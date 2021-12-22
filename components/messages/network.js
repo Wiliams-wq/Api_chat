@@ -5,11 +5,20 @@
 const express = require('express');
 const router = express.Router();
 
+//multer maneja archvios multimedia
+const multer = require('multer');
+
+
 //requerimos el controlador
 const controller = require('./controller');
 
 //requerimos la respuesta de network y el archvivo response para trabajar las respuestas
 const response = require('../../network/response');
+//se le dice a multer el destino de los archivos, en este caso la carpeta uploads 
+//esto en el disco local
+const upload = multer({
+    dest: 'uploads/'
+})
 
 router.get('/', (req, res) => {
     //rcreamos un query que servira como filtro, o devuelve null
@@ -25,8 +34,9 @@ router.get('/', (req, res) => {
             response.error(req, res, "Unexpected Error", 500, e)
         })
 });
-
-router.post('/', (req, res) => {
+//pasamos upload com o middleware(punto donde va a pasar algo antes de entrar a la funcion)
+//le decimos que solo tiene un archivo de nombre file
+router.post('/', upload.single('file'), (req, res) => {
     //enviamos mensaje y usuario al controlador tambien el chat
     controller.addMessage(req.body.chat, req.body.user, req.body.message)
         //con la promesa, obtenemos fullMessage y responsemos a response, enviando el mensaje

@@ -17,7 +17,7 @@ const mySchema = new Schema({
     //en todos los documentos de mongo y el que coincida lo trae y muestra. Asi como con chat
     chat:{
         type: Schema.ObjectId,
-        ref: "Chat"
+        ref: "chat"
     },
     //el objectId es el que se crea por defecto en la base de datos
     user: {
