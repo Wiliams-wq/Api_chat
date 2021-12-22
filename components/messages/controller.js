@@ -3,7 +3,7 @@
 //requerimos el store para poder usarlo
 const store = require("./store")
 //con esta funcion obtenemos el mensaje para crear el fullMessage con el usuario, message y fecha
-const addMessage = (user, message) => {
+const addMessage = (chat,user, message) => {
     //recibimos de network.js el usuario y el mensaje  y usamos una promesa
     return new Promise((resolve, reject) => {
 
@@ -15,8 +15,9 @@ const addMessage = (user, message) => {
         }
 
         //el arreglo de mensajes tiene los datos enviados por network.js ademas de que agregamos
-        //la fecha de creacion del mensaje
+        //la fecha de creacion del mensaje. utilizamos el chat para que se sepa quien creo el mensaje
         const fullMessage = {
+            chat: chat,
             user: user,
             message: message,
             date: new Date()

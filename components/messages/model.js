@@ -10,7 +10,20 @@ const Schema = mongoose.Schema;
 
 //el nuevo schema es el de mongoose, se define que tipo sera lo que se va a guardar
 const mySchema = new Schema({
-    user: String,
+    //se relaciona  la creacion de usuario con el mensaje ya que son dos compnentes separados
+
+    //objectID es una clase de mongoose que nos permite relacionar los dos componentes
+    //type schema para definir el tipo y la referencia a un usuario "user" este lo busca
+    //en todos los documentos de mongo y el que coincida lo trae y muestra. Asi como con chat
+    chat:{
+        type: Schema.ObjectId,
+        ref: "Chat"
+    },
+    //el objectId es el que se crea por defecto en la base de datos
+    user: {
+        type: Schema.ObjectId,
+        ref: "user",
+    },
     message: String,
     date: Date,
 });

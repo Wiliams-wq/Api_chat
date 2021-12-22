@@ -13,7 +13,7 @@ const response = require('../../network/response');
 
 router.get('/', (req, res) => {
     //rcreamos un query que servira como filtro, o devuelve null
-    const filterMessages = req.query.user || null;
+    const filterMessages = req.query.chat || null;
     //retornamos la promesa resuelta de controller.getMessage y en response pasamos 
     //la lista de mensajes que fue retornada
 
@@ -27,8 +27,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    //enviamos mensaje y usuario al controlador
-    controller.addMessage(req.body.user, req.body.message)
+    //enviamos mensaje y usuario al controlador tambien el chat
+    controller.addMessage(req.body.chat, req.body.user, req.body.message)
         //con la promesa, obtenemos fullMessage y responsemos a response, enviando el mensaje
         //y el estado de la peticion
         .then((fullMessage) => {
